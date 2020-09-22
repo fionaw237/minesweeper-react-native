@@ -7,13 +7,16 @@ const GridCell = () => {
       onPress={() => {
         console.log('reset button pressed')
       }}>
-      <Image source={require('../assets/grid-cell-button.png')} />
+      <Image style = {styles.cell} source={require('../assets/grid-cell-button.png')} />
     </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
-
+    cell: {
+        width: 40,
+        height: 40
+    }
 })
 
 export default GridCell

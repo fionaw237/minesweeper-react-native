@@ -1,16 +1,20 @@
-import React from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import React from 'react'
+import {Text, StyleSheet, View} from 'react-native'
 
-import GameScreen from './screens/GameScreen';
+import GameScreen from './screens/GameScreen'
 
 const App = () => {
   return (
-    <View>
+    <View style={styles.gameScreenContainer}>
       <GameScreen />
     </View>
-  );
-};
+  )
+}
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  gameScreenContainer: {
+        // flex: 1
+  }
+})
 
-export default App;
+export default App
