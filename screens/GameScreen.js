@@ -4,7 +4,7 @@ import {View, StyleSheet} from 'react-native'
 import GameScreenHeader from '../components/GameScreenHeader'
 import GameBoard from '../components/GameBoard'
 
-const GameScreen = (props) => {
+const GameScreen = () => {
   return (
       <View>
         <GameScreenHeader/>

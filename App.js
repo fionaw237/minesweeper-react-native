@@ -1,5 +1,5 @@
 import React from 'react'
-import {Text, StyleSheet, View} from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import GameScreen from './screens/GameScreen'
 
@@ -13,7 +13,8 @@ const App = () => {
 
 const styles = StyleSheet.create({
   gameScreenContainer: {
-        // flex: 1
+    flex: 1,
+    backgroundColor: '#ccc'
   }
 })
 
