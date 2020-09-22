@@ -1,12 +1,10 @@
 import React from 'react'
 import {TouchableOpacity, Image, StyleSheet} from 'react-native'
 
-const GridCell = () => {
+const GridCell = (props) => {
   return (
     <TouchableOpacity
-      onPress={() => {
-        console.log('reset button pressed')
-      }}>
+      onPress={() => props.onPress(props.coordinate)}>
       <Image style = {styles.cell} source={require('../assets/grid-cell-button.png')} />
     </TouchableOpacity>
   )

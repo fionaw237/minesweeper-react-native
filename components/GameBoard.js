@@ -23,9 +23,15 @@ const GameBoard = props => {
     const createRow = (rowNumber) => {
         const rowArray = []
         for (let columnNumber = 0; columnNumber < numberOfColumns; columnNumber++) {
-            rowArray.push(<GridCell key={columnNumber.toString() + rowNumber.toString()} />)
+            rowArray.push(
+                <GridCell key={columnNumber.toString()} coordinate={columnNumber.toString() + rowNumber.toString()} onPress={handleCellPress}/>
+            )
         }
         return rowArray
+    }
+
+    const handleCellPress = (coordinate) => {
+        console.log(coordinate)
     }
 
     return (
