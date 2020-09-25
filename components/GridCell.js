@@ -10,8 +10,6 @@ const configureCellDisplay = (cell) => {
 
 const GridCell = (props) => {
 
-  console.log(props)
-
   return (
     <TouchableOpacity
       onPress={() => props.onPress(props.cell.coordinate)}>
