@@ -12,6 +12,19 @@ const GameScreen = props => {
     const numberOfRows = 9
     const numberOfColumns = 9
 
+    const numberOfMines = () => {
+        if (selectedDifficulty == "Beginner") {
+            return 10
+        } else if (selectedDifficulty == "Intermediate") {
+            return 15
+        } else if (selectedDifficulty == "Advanced") {
+            return 20
+        }
+        return 0
+    }
+
+    const [remainingFlags, setRemainingFlags] = useState(() => numberOfMines())
+
     const initialiseGridCells = () => {
         const result = []
         for (let rowNumber = 0; rowNumber < numberOfRows; rowNumber++) {
@@ -69,7 +82,7 @@ const GameScreen = props => {
         <View style={styles.gameScreencontainer}>
             <View style={styles.header}>
                 <View style={styles.counterContainer}>
-                    <Text style={styles.counterText}>10</Text>
+                    <Text style={styles.counterText}>{remainingFlags}</Text>
                 </View>
                 <ResetGameButton onPress={handleResetButtonPressed} />
                 <View style={styles.counterContainer}>
