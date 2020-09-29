@@ -1,13 +1,11 @@
-import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import React from "react"
+import { StyleSheet } from "react-native"
 
-import GameScreen from './screens/GameScreen'
+import AppNavigator from "./navigation/AppNavigator"
 
 const App = () => {
   return (
-    <View style={styles.gameScreenContainer}>
-      <GameScreen />
-    </View>
+    <AppNavigator/>
   )
 }
 
