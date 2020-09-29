@@ -7,6 +7,8 @@ import Colours from "../constants/colours"
 
 const GameBoard = props => {
 
+    const selectedDifficulty = props.navigation.getParam("selectedDifficulty")
+
     const numberOfRows = 9
     const numberOfColumns = 9
 

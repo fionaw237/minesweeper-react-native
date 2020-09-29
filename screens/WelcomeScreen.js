@@ -7,8 +7,7 @@ import Colours from "../constants/colours"
 const WelcomeScreen = props => {
 
     const navigateToGameScreen = difficulty => {
-        console.log("Difficulty: ", difficulty)
-        props.navigation.navigate("Game")
+        props.navigation.navigate("Game", { selectedDifficulty: difficulty})
     }
 
     return (
