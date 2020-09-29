@@ -47,28 +47,6 @@ const GameScreen = props => {
 
     const [gridCells, setGridCells] = useState(initialiseGridCells())
 
-    // const renderGameBoard = () => {
-    //     const rowsArray = []
-    //     for (let rowNumber = 0; rowNumber < numberOfRows; rowNumber++) {
-    //         rowsArray.push(
-    //             <View key={rowNumber} style={styles.rowContainer}>
-    //                 {createRow(rowNumber)}
-    //             </View>
-    //         )
-    //     }
-    //     return rowsArray
-    // }
-
-    // const createRow = (rowNumber) => {
-    //     const rowArray = []
-    //     for (let columnNumber = 0; columnNumber < numberOfColumns; columnNumber++) {
-    //         rowArray.push(
-    //             <GridCell key={columnNumber.toString()} cell={gridCells[arrayIndexFromCoordinate(columnNumber.toString() + rowNumber.toString())]} onPress={handleCellPress} />
-    //         )
-    //     }
-    //     return rowArray
-    // }
-
     const handleCellPress = (coordinate) => {
         gridCells[arrayIndexFromCoordinate(coordinate)].uncovered = true
         setGridCells(current => [...current])
@@ -94,11 +72,8 @@ const GameScreen = props => {
                 </View>
             </View>
             <View style={styles.flatlistContainer}>
-                <FlatList data={gridCells} renderItem={renderGridCell} numColumns={numberOfColumns} />
+                <FlatList keyExtractor={item => item.coordinate} data={gridCells} renderItem={renderGridCell} numColumns={numberOfColumns} />
             </View>
-            {/* <View>
-                {renderGameBoard()}
-            </View> */}
         </View>
     )
 }
