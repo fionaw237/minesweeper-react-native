@@ -10,7 +10,7 @@ const fetchFonts = () => {
 }
 
 const App = () => {
-  
+
   const [dataLoaded, setDataLoaded] = useState(false)
 
   if (!dataLoaded) {
@@ -21,9 +21,7 @@ const App = () => {
     />
   }
 
-  return (
-    <AppNavigator />
-  )
+  return <AppNavigator />
 }
 
 export default App
