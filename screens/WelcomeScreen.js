@@ -1,6 +1,8 @@
 import React from "react"
 import { View, StyleSheet, Text, Image } from "react-native"
+
 import StandardButton from "../components/StandardButton"
+import Colours from "../constants/colours"
 
 const WelcomeScreen = props => {
 
@@ -42,11 +44,13 @@ const styles = StyleSheet.create({
     welcomeScreenContainer: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: Colours.mainBackground
     },
     title: {
         fontSize: 40,
-        height: "10%"
+        marginVertical: 30,
+        color: Colours.primary
     },
     imageContainer: {
 
@@ -61,17 +65,17 @@ const styles = StyleSheet.create({
     },
     difficultyButton: {
         marginVertical: 20,
-        backgroundColor: "#ccc"
+        backgroundColor: Colours.secondaryBackground
     },
     bestTimesButtonContainer: {
-        height: "10%",
+        flex: 1,
         width: "100%",
-        backgroundColor: "#ccc",
+        backgroundColor: Colours.secondaryBackground,
         justifyContent: "center",
         alignItems: "center"
     },
     bestTimesbutton: {
-        backgroundColor: "white"
+        backgroundColor: Colours.mainBackground
     }
 })
 

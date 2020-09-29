@@ -1,6 +1,8 @@
 import React from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 
+import Colours from "../constants/colours"
+
 const StandardButton = props => {
     return (
         <TouchableOpacity activeOpacity={0.6} onPress={props.onPress}>
@@ -19,7 +21,8 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         textAlign: "center",
-        fontSize: 22
+        fontSize: 22,
+        color: Colours.primary
     }
 })
 

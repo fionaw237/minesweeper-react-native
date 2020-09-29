@@ -3,6 +3,7 @@ import { View, StyleSheet, Text } from 'react-native'
 
 import GridCell from '../components/GridCell'
 import ResetGameButton from '../components/ResetGameButton'
+import Colours from "../constants/colours"
 
 const GameBoard = props => {
 
@@ -63,7 +64,7 @@ const GameBoard = props => {
     }
 
     return (
-        <View>
+        <View style={styles.gameScreencontainer}>
             <View style={styles.header}>
                 <View style={styles.counterContainer}>
                     <Text style={styles.counterText}>10</Text>
@@ -81,6 +82,10 @@ const GameBoard = props => {
 }
 
 const styles = StyleSheet.create({
+    gameScreencontainer: {
+        flex: 1,
+        backgroundColor: Colours.mainBackground
+    },
     rowContainer: {
         flexDirection: "row",
         justifyContent: "center"
