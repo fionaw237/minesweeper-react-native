@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
         backgroundColor: Colours.mainBackground
     },
     title: {
-        fontSize: 40,
+        fontFamily: "alegreya-sans",
+        fontSize: 44,
         marginVertical: 30,
         color: Colours.primary
     },

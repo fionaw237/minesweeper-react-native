@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         textAlign: "center",
-        fontSize: 22,
+        fontSize: 26,
+        fontFamily: "alegreya-sans",
         color: Colours.primary
     }
 })
