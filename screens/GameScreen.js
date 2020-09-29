@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, FlatList } from 'react-native'
 
 import GridCell from '../components/GridCell'
 import ResetGameButton from '../components/ResetGameButton'
@@ -47,27 +47,27 @@ const GameScreen = props => {
 
     const [gridCells, setGridCells] = useState(initialiseGridCells())
 
-    const renderGameBoard = () => {
-        const rowsArray = []
-        for (let rowNumber = 0; rowNumber < numberOfRows; rowNumber++) {
-            rowsArray.push(
-                <View key={rowNumber} style={styles.rowContainer}>
-                    {createRow(rowNumber)}
-                </View>
-            )
-        }
-        return rowsArray
-    }
+    // const renderGameBoard = () => {
+    //     const rowsArray = []
+    //     for (let rowNumber = 0; rowNumber < numberOfRows; rowNumber++) {
+    //         rowsArray.push(
+    //             <View key={rowNumber} style={styles.rowContainer}>
+    //                 {createRow(rowNumber)}
+    //             </View>
+    //         )
+    //     }
+    //     return rowsArray
+    // }
 
-    const createRow = (rowNumber) => {
-        const rowArray = []
-        for (let columnNumber = 0; columnNumber < numberOfColumns; columnNumber++) {
-            rowArray.push(
-                <GridCell key={columnNumber.toString()} cell={gridCells[arrayIndexFromCoordinate(columnNumber.toString() + rowNumber.toString())]} onPress={handleCellPress} />
-            )
-        }
-        return rowArray
-    }
+    // const createRow = (rowNumber) => {
+    //     const rowArray = []
+    //     for (let columnNumber = 0; columnNumber < numberOfColumns; columnNumber++) {
+    //         rowArray.push(
+    //             <GridCell key={columnNumber.toString()} cell={gridCells[arrayIndexFromCoordinate(columnNumber.toString() + rowNumber.toString())]} onPress={handleCellPress} />
+    //         )
+    //     }
+    //     return rowArray
+    // }
 
     const handleCellPress = (coordinate) => {
         gridCells[arrayIndexFromCoordinate(coordinate)].uncovered = true
@@ -76,6 +76,10 @@ const GameScreen = props => {
 
     const handleResetButtonPressed = () => {
         setGridCells(initialiseGridCells())
+    }
+
+    const renderGridCell = (cellData) => {
+        return <GridCell cell={cellData.item} onPress={handleCellPress} />
     }
 
     return (
@@ -89,9 +93,12 @@ const GameScreen = props => {
                     <Text style={styles.counterText}>00:00</Text>
                 </View>
             </View>
-            <View>
-                {renderGameBoard()}
+            <View style={styles.flatlistContainer}>
+                <FlatList data={gridCells} renderItem={renderGridCell} numColumns={numberOfColumns} />
             </View>
+            {/* <View>
+                {renderGameBoard()}
+            </View> */}
         </View>
     )
 }
@@ -110,6 +117,9 @@ const styles = StyleSheet.create({
         marginVertical: 50,
         justifyContent: 'space-around',
         alignItems: 'center',
+    },
+    flatlistContainer: {
+        alignItems: "center"
     },
     counterContainer: {
         width: '30%',
