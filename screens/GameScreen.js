@@ -5,7 +5,7 @@ import GridCell from '../components/GridCell'
 import ResetGameButton from '../components/ResetGameButton'
 import Colours from "../constants/colours"
 
-const GameBoard = props => {
+const GameScreen = props => {
 
     const selectedDifficulty = props.navigation.getParam("selectedDifficulty")
 
@@ -62,7 +62,7 @@ const GameBoard = props => {
     }
 
     const handleResetButtonPressed = () => {
-       setGridCells(initialiseGridCells())
+        setGridCells(initialiseGridCells())
     }
 
     return (
@@ -112,4 +112,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default GameBoard
+export default GameScreen
