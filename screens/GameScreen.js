@@ -129,7 +129,7 @@ const GameScreen = props => {
     }
 
     const handleCellPress = cell => {
-        if (gameState == "GameOver") return
+        if (gameState == "GameOver" || cell.uncovered) return
 
         if (gameState == "ReadyToStart") {
             randomlydistributeMines(cell)

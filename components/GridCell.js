@@ -1,10 +1,27 @@
 import React from "react"
-import { TouchableHighlight, Image, StyleSheet, View, Text } from "react-native"
+import {
+  TouchableHighlight,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  View,
+  Text
+} from "react-native"
 import Colours from "../constants/colours"
+
+/* <ImageBackground style={{width:100, height:100, jsutifyContent:'center}}>
+<Image/> //childimage
+</ImageBackground */
 
 const configureCellDisplay = cell => {
   if (cell.hasFlag) {
-    return <Image style={styles.cell} source={require("../assets/flag.png")} />
+    return (
+      <ImageBackground style={{ width: 40, height: 40 }} source={require("../assets/grid-cell-button.png")}>
+        <View style={styles.flagImageContainer}>
+          <Image style={styles.flagImage} source={require("../assets/flag.png")} />
+        </View>
+      </ImageBackground>
+    )
   }
   if (!cell.uncovered) {
     return <Image style={styles.cell} source={require("../assets/grid-cell-button.png")} />
@@ -58,6 +75,15 @@ const styles = StyleSheet.create({
   },
   minesNumberText: {
     fontSize: 16
+  },
+  flagImageContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  flagImage: {
+    width: 30,
+    height: 30
   }
 })
 

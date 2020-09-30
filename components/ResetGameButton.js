@@ -1,5 +1,9 @@
 import React from 'react'
-import { TouchableOpacity, Image, StyleSheet } from 'react-native'
+import { 
+  TouchableOpacity, 
+  Image, 
+  StyleSheet 
+} from 'react-native'
 
 const getImageSource = gameState => {
   if (gameState == "ReadyToStart" || gameState == "TimerStarted") {
