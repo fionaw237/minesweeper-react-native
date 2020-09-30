@@ -146,9 +146,11 @@ const GameScreen = props => {
     }
 
     const handleLongPress = cell => {
-        cell.hasFlag = true
-        setGridCells(current => [...current])
-        setRemainingFlags(current => current - 1)
+        if (remainingFlags > 0) {
+            cell.hasFlag = true
+            setGridCells(current => [...current])
+            setRemainingFlags(current => current - 1)
+        }
     }
 
     const handleResetButtonPressed = () => {
