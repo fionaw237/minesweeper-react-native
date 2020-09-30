@@ -49,7 +49,7 @@ const GameScreen = props => {
             let randomColumn = Math.floor(Math.random() * Math.floor(numberOfColumns))
             let randomCoordinate = randomRow.toString() + randomColumn.toString()
 
-            let gridCell = gridCells.find( cell => cell.coordinate == randomCoordinate )
+            let gridCell = gridCells.find(cell => cell.coordinate == randomCoordinate)
             if (!gridCell.hasMine) {
                 gridCell.hasMine = true
                 mineCount++
@@ -63,6 +63,64 @@ const GameScreen = props => {
                 gridCells[index].uncovered = true
             }
         }
+    }
+
+    const getSurroundingRows = cell => {
+        let currentRow = parseInt(cell.coordinate[0])
+        let surroundingRows = []
+        if (currentRow != 0) {
+            surroundingRows.push(currentRow - 1)
+        }
+
+        surroundingRows.push(currentRow)
+
+        if (currentRow != numberOfRows - 1) {
+            surroundingRows.push(currentRow + 1)
+        }
+        return surroundingRows
+    }
+
+    const getSurroundingColumns = cell => {
+        let currentColumn = parseInt(cell.coordinate[1])
+        let surroundingColumns = []
+        if (currentColumn != 0) {
+            surroundingColumns.push(currentColumn - 1)
+        }
+
+        surroundingColumns.push(currentColumn)
+
+        if (currentColumn != numberOfColumns - 1) {
+            surroundingColumns.push(currentColumn + 1)
+        }
+        return surroundingColumns
+    }
+
+    const getSurroundingCells = cell => {
+        let surroundingCells = []
+        const validRows = getSurroundingRows(cell)
+        const validColumns = getSurroundingColumns(cell)
+
+        for (let i = 0; i < validRows.length; i++) {
+            for (let j = 0; j < validColumns.length; j++) {
+                const coordinate = validRows[i].toString() + validColumns[j].toString()
+                console.log("coordinate: ", coordinate)
+                console.log(cell.coordinate)
+                if (coordinate === cell.coordinate) {
+                    continue
+                } else {
+                    surroundingCells.push(
+                        gridCells.find(
+                            gridCell => gridCell.coordinate == validRows[i].toString() + validColumns[j].toString()
+                        )
+                    )
+                }
+            }
+        }
+        return surroundingCells
+    }
+
+    const calculateMinesInVicinity = cell => {
+        return getSurroundingCells(cell).filter(cell => cell.hasMine).length
     }
 
     const handleGameOver = () => {
@@ -85,6 +143,8 @@ const GameScreen = props => {
             handleGameOver()
             return
         }
+
+        cell.minesInVicinity = calculateMinesInVicinity(cell)
 
         cell.uncovered = true
         setGridCells(current => [...current])

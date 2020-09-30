@@ -1,16 +1,22 @@
 import React from "react"
-import { TouchableHighlight, Image, StyleSheet, View } from "react-native"
+import { TouchableHighlight, Image, StyleSheet, View, Text } from "react-native"
 
 const configureCellDisplay = (cell) => {
   if (!cell.uncovered) {
     return <Image style={styles.cell} source={require("../assets/grid-cell-button.png")} />
   } else if (cell.hasMine) {
-    return <Image
-     style={cell.pressedForGameOver ? styles.pressedForGameOver : styles.cell} 
-     source={require("../assets/mine.png")} 
-     />
+    return (
+      <Image
+        style={cell.pressedForGameOver ? styles.pressedForGameOver : styles.cell}
+        source={require("../assets/mine.png")}
+      />
+    )
   }
-  return <View style={styles.uncoveredCell}></View>
+  return (
+    <View style={styles.uncoveredCell}>
+      <Text style={styles.minesNumberText}>{cell.minesInVicinity.toString()}</Text>
+    </View>
+  )
 }
 
 const GridCell = (props) => {
@@ -36,7 +42,11 @@ const styles = StyleSheet.create({
   uncoveredCell: {
     width: 40,
     height: 40,
-    backgroundColor: "black"
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  minesNumberText: {
+    fontSize: 16
   }
 })
 

@@ -5,6 +5,7 @@ class GridCellModel {
         this.hasFlag = false
         this.uncovered = false
         this.pressedForGameOver = false
+        this.minesInVicinity = null
     }
 }
 
