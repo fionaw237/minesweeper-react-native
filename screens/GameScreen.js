@@ -68,31 +68,23 @@ const GameScreen = props => {
     const getSurroundingRows = cell => {
         let currentRow = parseInt(cell.coordinate[0])
         let surroundingRows = []
-        if (currentRow != 0) {
-            surroundingRows.push(currentRow - 1)
+        for (let i = -1; i < 2; i++) {
+            surroundingRows.push(currentRow + i)
         }
-
-        surroundingRows.push(currentRow)
-
-        if (currentRow != numberOfRows - 1) {
-            surroundingRows.push(currentRow + 1)
-        }
-        return surroundingRows
+        return surroundingRows.filter(
+            row => row >= 0 && row < numberOfRows
+        )
     }
 
     const getSurroundingColumns = cell => {
         let currentColumn = parseInt(cell.coordinate[1])
         let surroundingColumns = []
-        if (currentColumn != 0) {
-            surroundingColumns.push(currentColumn - 1)
+        for (let i = -1; i < 2; i++) {
+            surroundingColumns.push(currentColumn + i)
         }
-
-        surroundingColumns.push(currentColumn)
-
-        if (currentColumn != numberOfColumns - 1) {
-            surroundingColumns.push(currentColumn + 1)
-        }
-        return surroundingColumns
+        return surroundingColumns.filter(
+            column => column >= 0 && column < numberOfColumns
+        )
     }
 
     const getSurroundingCells = cell => {
@@ -103,8 +95,6 @@ const GameScreen = props => {
         for (let i = 0; i < validRows.length; i++) {
             for (let j = 0; j < validColumns.length; j++) {
                 const coordinate = validRows[i].toString() + validColumns[j].toString()
-                console.log("coordinate: ", coordinate)
-                console.log(cell.coordinate)
                 if (coordinate === cell.coordinate) {
                     continue
                 } else {
