@@ -40,7 +40,7 @@ const GameScreen = props => {
 
     const [gridCells, setGridCells] = useState(initialiseGridCells())
 
-    const randomlydistributeMines = () => {
+    const randomlydistributeMines = (firstCellPressed) => {
         let maxMineCount = numberOfMines()
         let mineCount = 0
 
@@ -49,10 +49,14 @@ const GameScreen = props => {
             let randomColumn = Math.floor(Math.random() * Math.floor(numberOfColumns))
             let randomCoordinate = randomRow.toString() + randomColumn.toString()
 
-            let gridCell = gridCells.find(cell => cell.coordinate == randomCoordinate)
-            if (!gridCell.hasMine) {
-                gridCell.hasMine = true
-                mineCount++
+            if (randomCoordinate === firstCellPressed.coordinate) {
+
+            } else {
+                let gridCell = gridCells.find(cell => cell.coordinate == randomCoordinate)
+                if (!gridCell.hasMine) {
+                    gridCell.hasMine = true
+                    mineCount++
+                }
             }
         }
     }
@@ -123,7 +127,7 @@ const GameScreen = props => {
         if (gameState == "GameOver") return
 
         if (gameState == "ReadyToStart") {
-            randomlydistributeMines()
+            randomlydistributeMines(cell)
             // start timer
             setGameState("TimerStarted")
         }
