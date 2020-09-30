@@ -41,14 +41,14 @@ const GameScreen = props => {
         return result
     }
 
-    const arrayIndexFromCoordinate = (coordinate) => {
-        return (parseInt(coordinate[0]) * numberOfColumns) + parseInt(coordinate[1])
-    }
+    // const arrayIndexFromCoordinate = (coordinate) => {
+    //     return (parseInt(coordinate[0]) * numberOfColumns) + parseInt(coordinate[1])
+    // }
 
     const [gridCells, setGridCells] = useState(initialiseGridCells())
 
-    const handleCellPress = (coordinate) => {
-        gridCells[arrayIndexFromCoordinate(coordinate)].uncovered = true
+    const handleCellPress = (cell) => {
+        cell.uncovered = true
         setGridCells(current => [...current])
     }
 
@@ -57,7 +57,7 @@ const GameScreen = props => {
     }
 
     const renderGridCell = (cellData) => {
-        return <GridCell cell={cellData.item} onPress={handleCellPress} />
+        return <GridCell cell={cellData.item} onPress={() => handleCellPress(cellData.item)} />
     }
 
     return (
