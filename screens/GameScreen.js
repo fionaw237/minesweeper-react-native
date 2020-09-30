@@ -154,6 +154,7 @@ const GameScreen = props => {
     const handleResetButtonPressed = () => {
         setGridCells(initialiseGridCells())
         setGameState("ReadyToStart")
+        setRemainingFlags(numberOfMines())
     }
 
     const renderGridCell = (cellData) => {
