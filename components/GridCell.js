@@ -3,9 +3,12 @@ import { TouchableHighlight, Image, StyleSheet, View, Text } from "react-native"
 import Colours from "../constants/colours"
 
 const configureCellDisplay = cell => {
+  if (cell.hasFlag) {
+    return <Image style={styles.cell} source={require("../assets/flag.png")} />
+  }
   if (!cell.uncovered) {
     return <Image style={styles.cell} source={require("../assets/grid-cell-button.png")} />
-  } else if (cell.hasMine) {
+  } else if (cell.hasMine && !cell.hasFlag) {
     return (
       <Image
         style={cell.pressedForGameOver ? styles.pressedForGameOver : styles.cell}
@@ -26,10 +29,11 @@ const getCellTextColour = cell => {
 }
 
 const GridCell = props => {
-
   return (
     <TouchableHighlight
-      onPress={() => props.onPress(props.cell.coordinate)}>
+      onPress={() => props.onPress()}
+      onLongPress={() => props.onLongPress()}
+    >
       {configureCellDisplay(props.cell)}
     </TouchableHighlight>
   )

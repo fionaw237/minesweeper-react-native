@@ -5,6 +5,7 @@ import GridCell from "../components/GridCell"
 import GridCellModel from "../models/GridCellModel"
 import ResetGameButton from "../components/ResetGameButton"
 import Colours from "../constants/colours"
+import { cos } from "react-native-reanimated"
 
 const GameScreen = props => {
 
@@ -123,7 +124,7 @@ const GameScreen = props => {
         setGridCells(current => [...current])
     }
 
-    const handleCellPress = (cell) => {
+    const handleCellPress = cell => {
         if (gameState == "GameOver") return
 
         if (gameState == "ReadyToStart") {
@@ -144,13 +145,25 @@ const GameScreen = props => {
         setGridCells(current => [...current])
     }
 
+    const handleLongPress = cell => {
+        cell.hasFlag = true
+        setGridCells(current => [...current])
+        setRemainingFlags(current => current - 1)
+    }
+
     const handleResetButtonPressed = () => {
         setGridCells(initialiseGridCells())
         setGameState("ReadyToStart")
     }
 
     const renderGridCell = (cellData) => {
-        return <GridCell cell={cellData.item} onPress={() => handleCellPress(cellData.item)} />
+        return (
+            <GridCell
+                cell={cellData.item}
+                onPress={() => handleCellPress(cellData.item)}
+                onLongPress={() => handleLongPress(cellData.item)}
+            />
+        )
     }
 
     return (
