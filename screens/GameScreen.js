@@ -1,11 +1,15 @@
 import React, { useState } from "react"
-import { View, StyleSheet, Text, FlatList } from "react-native"
-
+import {
+    View,
+    StyleSheet,
+    Text,
+    FlatList,
+    Alert
+} from "react-native"
 import GridCell from "../components/GridCell"
 import GridCellModel from "../models/GridCellModel"
 import ResetGameButton from "../components/ResetGameButton"
 import Colours from "../constants/colours"
-import { cos } from "react-native-reanimated"
 
 const GameScreen = props => {
 
@@ -140,17 +144,22 @@ const GameScreen = props => {
         }
 
         cell.minesInVicinity = calculateMinesInVicinity(cell)
-
         cell.uncovered = true
         setGridCells(current => [...current])
     }
 
     const handleLongPress = cell => {
-        if (remainingFlags > 0) {
+        if (cell.uncovered) return
+        if (cell.hasFlag) {
+            cell.hasFlag = false
+            setRemainingFlags(current => current + 1)
+        } else if (!cell.hasFlag && remainingFlags > 0) {
             cell.hasFlag = true
-            setGridCells(current => [...current])
             setRemainingFlags(current => current - 1)
+        } else {
+            Alert.alert("No flags left!", "Remove an existing flag to place one elsewhere", [{ text: "Okay", style: "destructive" }])
         }
+        setGridCells(current => [...current])
     }
 
     const handleResetButtonPressed = () => {
@@ -171,12 +180,11 @@ const GameScreen = props => {
 
     return (
         <View style={styles.gameScreencontainer}>
-            {console.log("RENDERING!")}
             <View style={styles.header}>
                 <View style={styles.counterContainer}>
                     <Text style={styles.counterText}>{remainingFlags}</Text>
                 </View>
-                <ResetGameButton onPress={handleResetButtonPressed} gameState={gameState}/>
+                <ResetGameButton onPress={handleResetButtonPressed} gameState={gameState} />
                 <View style={styles.counterContainer}>
                     <Text style={styles.counterText}>00:00</Text>
                 </View>

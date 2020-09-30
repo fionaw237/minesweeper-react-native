@@ -1,7 +1,7 @@
 import React from 'react'
 import { TouchableOpacity, Image, StyleSheet } from 'react-native'
 
-const getImageSource = (gameState) => {
+const getImageSource = gameState => {
   if (gameState == "ReadyToStart" || gameState == "TimerStarted") {
     return require('../assets/happy-face.png')
   } else if (gameState == "GameOver") {
@@ -11,7 +11,7 @@ const getImageSource = (gameState) => {
   }
 }
 
-const ResetGameButton = (props) => {
+const ResetGameButton = props => {
   return (
     <TouchableOpacity
       onPress={props.onPress}>
