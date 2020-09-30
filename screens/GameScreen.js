@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import { View, StyleSheet, Text, FlatList } from 'react-native'
+import React, { useState } from "react"
+import { View, StyleSheet, Text, FlatList } from "react-native"
 
-import GridCell from '../components/GridCell'
-import ResetGameButton from '../components/ResetGameButton'
+import GridCell from "../components/GridCell"
+import GridCellModel from "../models/GridCellModel"
+import ResetGameButton from "../components/ResetGameButton"
 import Colours from "../constants/colours"
 
 const GameScreen = props => {
@@ -29,21 +30,10 @@ const GameScreen = props => {
         const result = []
         for (let rowNumber = 0; rowNumber < numberOfRows; rowNumber++) {
             for (let columnNumber = 0; columnNumber < numberOfColumns; columnNumber++)
-                result.push(
-                    {
-                        coordinate: rowNumber.toString() + columnNumber.toString(),
-                        hasMine: false,
-                        hasFlag: false,
-                        uncovered: false
-                    }
-                )
+                result.push( new GridCellModel(rowNumber.toString() + columnNumber.toString()) )
         }
         return result
     }
-
-    // const arrayIndexFromCoordinate = (coordinate) => {
-    //     return (parseInt(coordinate[0]) * numberOfColumns) + parseInt(coordinate[1])
-    // }
 
     const [gridCells, setGridCells] = useState(initialiseGridCells())
 
