@@ -174,7 +174,7 @@ const GameScreen = props => {
                 <View style={styles.counterContainer}>
                     <Text style={styles.counterText}>{remainingFlags}</Text>
                 </View>
-                <ResetGameButton onPress={handleResetButtonPressed} />
+                <ResetGameButton onPress={handleResetButtonPressed} gameState={gameState}/>
                 <View style={styles.counterContainer}>
                     <Text style={styles.counterText}>00:00</Text>
                 </View>
