@@ -24,26 +24,75 @@ const GameScreen = props => {
         return 0
     }
 
+    const [gameState, setGameState] = useState("ReadyToStart")
     const [remainingFlags, setRemainingFlags] = useState(() => numberOfMines())
 
     const initialiseGridCells = () => {
         const result = []
         for (let rowNumber = 0; rowNumber < numberOfRows; rowNumber++) {
             for (let columnNumber = 0; columnNumber < numberOfColumns; columnNumber++)
-                result.push( new GridCellModel(rowNumber.toString() + columnNumber.toString()) )
+                result.push(
+                    new GridCellModel(rowNumber.toString() + columnNumber.toString())
+                )
         }
         return result
     }
 
     const [gridCells, setGridCells] = useState(initialiseGridCells())
 
+    const randomlydistributeMines = () => {
+        let maxMineCount = numberOfMines()
+        let mineCount = 0
+
+        while (mineCount < maxMineCount) {
+            let randomRow = Math.floor(Math.random() * Math.floor(numberOfRows))
+            let randomColumn = Math.floor(Math.random() * Math.floor(numberOfColumns))
+            let randomCoordinate = randomRow.toString() + randomColumn.toString()
+
+            let gridCell = gridCells.find( cell => cell.coordinate == randomCoordinate )
+            if (!gridCell.hasMine) {
+                gridCell.hasMine = true
+                mineCount++
+            }
+        }
+    }
+
+    const uncoverMineContainingCells = () => {
+        for (let index = 0; index < gridCells.length; index++) {
+            if (gridCells[index].hasMine) {
+                gridCells[index].uncovered = true
+            }
+        }
+    }
+
+    const handleGameOver = () => {
+        setGameState("GameOver")
+        uncoverMineContainingCells()
+        setGridCells(current => [...current])
+    }
+
     const handleCellPress = (cell) => {
+        if (gameState == "GameOver") return
+
+        if (gameState == "ReadyToStart") {
+            randomlydistributeMines()
+            // start timer
+            setGameState("TimerStarted")
+        }
+
+        if (cell.hasMine) {
+            cell.pressedForGameOver = true
+            handleGameOver()
+            return
+        }
+
         cell.uncovered = true
         setGridCells(current => [...current])
     }
 
     const handleResetButtonPressed = () => {
         setGridCells(initialiseGridCells())
+        setTimerStarted(false)
     }
 
     const renderGridCell = (cellData) => {
@@ -52,6 +101,7 @@ const GameScreen = props => {
 
     return (
         <View style={styles.gameScreencontainer}>
+            {console.log("RENDERING!")}
             <View style={styles.header}>
                 <View style={styles.counterContainer}>
                     <Text style={styles.counterText}>{remainingFlags}</Text>
