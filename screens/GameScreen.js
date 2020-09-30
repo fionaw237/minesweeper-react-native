@@ -92,7 +92,7 @@ const GameScreen = props => {
 
     const handleResetButtonPressed = () => {
         setGridCells(initialiseGridCells())
-        setTimerStarted(false)
+        setGameState("ReadyToStart")
     }
 
     const renderGridCell = (cellData) => {
