@@ -139,13 +139,9 @@ const GameScreen = props => {
         while (cellsWithZeroMines.size != 0) {
             const cellsToCheck = [...cellsWithZeroMines]
             cellsWithZeroMines.clear()
-            for (let i = 0; i < cellsToCheck.length; i++) {
 
-                let cellToCheck = gridCells.find( cell => cell == cellsToCheck[i])
-                let surroundingCells = getSurroundingCells(cellToCheck)
-
-                for (let j = 0; j < surroundingCells.length; j++) {
-                    let surroundingCell = surroundingCells[j]
+            cellsToCheck.forEach(cellToCheck => {
+                getSurroundingCells(cellToCheck).forEach(surroundingCell => {
                     if (!cellsChecked.has(surroundingCell)) {
                         cellsChecked.add(surroundingCell)
                         surroundingCell.minesInVicinity = calculateMinesInVicinity(surroundingCell)
@@ -153,14 +149,12 @@ const GameScreen = props => {
                         if (surroundingCell.minesInVicinity == 0) {
                             cellsWithZeroMines.add(surroundingCell)
                         }
-
                         if (!surroundingCell.hasFlag) {
                             surroundingCell.state = "Uncovered"
                         }
                     }
-                }
-
-            }
+                })
+            })
         }
     }
 
