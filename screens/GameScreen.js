@@ -159,16 +159,24 @@ const GameScreen = props => {
     }
 
     const checkForGameWon = () => {
-        let clickedCellCount = gridCells.filter( cell => cell.hasFlag || cell.state == "Uncovered").length
+        let clickedCellCount = gridCells.filter(cell => cell.hasFlag || cell.state == "Uncovered").length
         return clickedCellCount == (numberOfRows * numberOfColumns) - remainingFlags
     }
 
     const handleGameWon = () => {
         Alert.alert("You won!", "Your time was 00:00", [{ text: "Great!", style: "default" }])
+        gridCells.forEach(cell => {
+            if (cell.state == "Covered") {
+                cell.hasFlag = true
+                cell.state = "Flagged"
+                setRemainingFlags(current => current - 1)
+            }
+        })
+        setGridCells(current => [...current])
     }
 
     const handleCellPress = cell => {
-        if (gameState == "GameOver" || cell.state == "Uncovered") return
+        if (gameState == "GameOver" || gameState == "GameWon" || cell.state == "Uncovered") return
 
         if (gameState == "ReadyToStart") {
             randomlydistributeMines(cell)
