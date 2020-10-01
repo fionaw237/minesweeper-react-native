@@ -34,7 +34,7 @@ const configureCellDisplay = cell => {
     case "Mine":
       return (
         <Image
-          style={cell.pressedForGameOver ? styles.pressedForGameOver : styles.cell}
+          style={cell.pressedForGameOver ? styles.pressedForGameOver : styles.mineCell}
           source={require("../assets/mine.png")}
         />
       )
@@ -54,7 +54,7 @@ const getCellTextColour = cell => {
 
 const GridCell = props => {
   return (
-    <TouchableHighlight
+    <TouchableHighlight style={styles.cellContainer}
       onPress={() => props.onPress()}
       onLongPress={() => props.onLongPress()}
     >
@@ -64,9 +64,17 @@ const GridCell = props => {
 }
 
 const styles = StyleSheet.create({
+  cellContainer: {
+    margin: 1
+  },
   cell: {
     width: 40,
     height: 40
+  },
+  mineCell: {
+    width: 40,
+    height: 40,
+    backgroundColor: Colours.secondaryBackground
   },
   pressedForGameOver: {
     width: 40,
