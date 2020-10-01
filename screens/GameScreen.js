@@ -130,6 +130,46 @@ const GameScreen = props => {
         setGridCells(current => [...current])
     }
 
+    const handleZeroMinesInVicinityOfCell = cell => {
+        let coordinatesChecked = new Set()
+        coordinatesChecked.add(cell.coordinate)
+        let coordinatesWithZeroMines = new Set()
+        coordinatesWithZeroMines.add(cell.coordinate)
+
+        console.log(coordinatesChecked)
+        console.log(coordinatesWithZeroMines)
+
+        while (coordinatesWithZeroMines.size != 0) {
+            const coordinatesToCheck = [...coordinatesWithZeroMines]
+            coordinatesWithZeroMines.clear()
+            console.log(coordinatesWithZeroMines)
+            console.log(coordinatesToCheck)
+            for (let i = 0; i < coordinatesToCheck.length; i++) {
+
+                let cellToCheck = gridCells.find( x => x.coordinate == coordinatesToCheck[i])
+
+                let surroundingCells = getSurroundingCells(cellToCheck)
+
+                for (let j = 0; j < surroundingCells.length; j++) {
+                    let surroundingCell = surroundingCells[j]
+                    if (!coordinatesChecked.has(surroundingCell.coordinate)) {
+                        coordinatesChecked.add(surroundingCell.coordinate)
+                        surroundingCell.minesInVicinity = calculateMinesInVicinity(surroundingCell)
+
+                        if (surroundingCell.minesInVicinity == 0) {
+                            coordinatesWithZeroMines.add(surroundingCell.coordinate)
+                        }
+
+                        if (!surroundingCell.hasFlag) {
+                            surroundingCell.state = "Uncovered"
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
     const handleCellPress = cell => {
         if (gameState == "GameOver" || cell.state == "Uncovered") return
 
@@ -146,6 +186,11 @@ const GameScreen = props => {
         }
 
         cell.minesInVicinity = calculateMinesInVicinity(cell)
+
+        if (cell.minesInVicinity == 0) {
+            handleZeroMinesInVicinityOfCell(cell)
+        }
+
         cell.state = "Uncovered"
         setGridCells(current => [...current])
     }
