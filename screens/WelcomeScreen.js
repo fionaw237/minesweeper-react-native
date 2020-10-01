@@ -1,5 +1,10 @@
 import React from "react"
-import { View, StyleSheet, Text, Image } from "react-native"
+import { 
+    View, 
+    StyleSheet, 
+    Text, 
+    Image 
+} from "react-native"
 
 import StandardButton from "../components/StandardButton"
 import Colours from "../constants/colours"
