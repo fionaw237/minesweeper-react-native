@@ -9,31 +9,58 @@ import {
 } from "react-native"
 import Colours from "../constants/colours"
 
-const configureCellDisplay = cell => {
+const getCellState = (cell, gameState) => {
   if (cell.hasFlag) {
-    return (
-      <ImageBackground style={{ width: 40, height: 40 }} source={require("../assets/grid-cell-button.png")}>
-        <View style={styles.flagImageContainer}>
-          <Image style={styles.flagImage} source={require("../assets/flag.png")} />
-        </View>
-      </ImageBackground>
-    )
-  }
-  if (!cell.uncovered) {
-    return <Image style={styles.cell} source={require("../assets/grid-cell-button.png")} />
+    if (gameState == "GameOver" && !cell.hasMine) {
+      return "FlaggedIncorrectly"
+    }
+    return "Flagged"
+  } else if (!cell.uncovered) {
+    return "Covered"
   } else if (cell.hasMine && !cell.hasFlag) {
-    return (
-      <Image
-        style={cell.pressedForGameOver ? styles.pressedForGameOver : styles.cell}
-        source={require("../assets/mine.png")}
-      />
-    )
-  } 
-  return (
-    <View style={styles.uncoveredCell}>
-      <Text style={{ ...styles.minesNumberText, color: getCellTextColour(cell) }}>{cell.minesInVicinity.toString()}</Text>
-    </View>
-  )
+    return "Mine"
+  }
+  return "MinesInVicinity"
+}
+
+const configureCellDisplay = (cell, gameState) => {
+  const cellState = getCellState(cell, gameState)
+
+  switch (cellState) {
+    case "Covered":
+      return <Image style={styles.cell} source={require("../assets/grid-cell-button.png")} />
+    case "Flagged":
+      return (
+        <ImageBackground style={{ width: 40, height: 40 }} source={require("../assets/grid-cell-button.png")}>
+          <View style={styles.flagImageContainer}>
+            <Image style={styles.flagImage} source={require("../assets/flag.png")} />
+          </View>
+        </ImageBackground>
+      )
+    case "FlaggedIncorrectly":
+      return (
+        <ImageBackground style={{ width: 40, height: 40 }} source={require("../assets/grid-cell-button.png")}>
+          <ImageBackground style={{ width: 40, height: 40 }} source={require("../assets/mine.png")}>
+            <View style={styles.flagImageContainer}>
+              <Image style={styles.cell} source={require("../assets/cross.png")} />
+            </View>
+          </ImageBackground>
+        </ImageBackground>
+      )
+    case "Mine":
+      return (
+        <Image
+          style={cell.pressedForGameOver ? styles.pressedForGameOver : styles.cell}
+          source={require("../assets/mine.png")}
+        />
+      )
+    case "MinesInVicinity":
+      return (
+        <View style={styles.uncoveredCell}>
+          <Text style={{ ...styles.minesNumberText, color: getCellTextColour(cell) }}>{cell.minesInVicinity.toString()}</Text>
+        </View>
+      )
+  }
 }
 
 const getCellTextColour = cell => {
@@ -47,7 +74,7 @@ const GridCell = props => {
       onPress={() => props.onPress()}
       onLongPress={() => props.onLongPress()}
     >
-      {configureCellDisplay(props.cell)}
+      {configureCellDisplay(props.cell, props.gameState)}
     </TouchableHighlight>
   )
 }
