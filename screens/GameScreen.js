@@ -131,33 +131,27 @@ const GameScreen = props => {
     }
 
     const handleZeroMinesInVicinityOfCell = cell => {
-        let coordinatesChecked = new Set()
-        coordinatesChecked.add(cell.coordinate)
-        let coordinatesWithZeroMines = new Set()
-        coordinatesWithZeroMines.add(cell.coordinate)
+        let cellsChecked = new Set()
+        cellsChecked.add(cell)
+        let cellsWithZeroMines = new Set()
+        cellsWithZeroMines.add(cell)
 
-        console.log(coordinatesChecked)
-        console.log(coordinatesWithZeroMines)
+        while (cellsWithZeroMines.size != 0) {
+            const cellsToCheck = [...cellsWithZeroMines]
+            cellsWithZeroMines.clear()
+            for (let i = 0; i < cellsToCheck.length; i++) {
 
-        while (coordinatesWithZeroMines.size != 0) {
-            const coordinatesToCheck = [...coordinatesWithZeroMines]
-            coordinatesWithZeroMines.clear()
-            console.log(coordinatesWithZeroMines)
-            console.log(coordinatesToCheck)
-            for (let i = 0; i < coordinatesToCheck.length; i++) {
-
-                let cellToCheck = gridCells.find( x => x.coordinate == coordinatesToCheck[i])
-
+                let cellToCheck = gridCells.find( cell => cell == cellsToCheck[i])
                 let surroundingCells = getSurroundingCells(cellToCheck)
 
                 for (let j = 0; j < surroundingCells.length; j++) {
                     let surroundingCell = surroundingCells[j]
-                    if (!coordinatesChecked.has(surroundingCell.coordinate)) {
-                        coordinatesChecked.add(surroundingCell.coordinate)
+                    if (!cellsChecked.has(surroundingCell)) {
+                        cellsChecked.add(surroundingCell)
                         surroundingCell.minesInVicinity = calculateMinesInVicinity(surroundingCell)
 
                         if (surroundingCell.minesInVicinity == 0) {
-                            coordinatesWithZeroMines.add(surroundingCell.coordinate)
+                            cellsWithZeroMines.add(surroundingCell)
                         }
 
                         if (!surroundingCell.hasFlag) {
