@@ -67,13 +67,13 @@ const GameScreen = props => {
     }
 
     const uncoverMineContainingCells = () => {
-        for (let index = 0; index < gridCells.length; index++) {
-            if (gridCells[index].hasMine) {
-                gridCells[index].state = "Mine"
-            } else if (gridCells[index].hasFlag) {
-                gridCells[index].state = "FlaggedIncorrectly"
+        gridCells.forEach(cell => {
+            if (cell.hasMine) {
+                cell.state = "Mine"
+            } else if (cell.hasFlag) {
+                cell.state = "FlaggedIncorrectly"
             }
-        }
+        })
     }
 
     const getSurroundingRows = cell => {
@@ -103,20 +103,20 @@ const GameScreen = props => {
         const validRows = getSurroundingRows(cell)
         const validColumns = getSurroundingColumns(cell)
 
-        for (let i = 0; i < validRows.length; i++) {
-            for (let j = 0; j < validColumns.length; j++) {
-                const coordinate = validRows[i].toString() + validColumns[j].toString()
+        validRows.forEach(row => {
+            validColumns.forEach(column => {
+                const coordinate = row.toString() + column.toString()
                 if (coordinate === cell.coordinate) {
-                    continue
+                    return
                 } else {
                     surroundingCells.push(
                         gridCells.find(
-                            gridCell => gridCell.coordinate == validRows[i].toString() + validColumns[j].toString()
+                            gridCell => gridCell.coordinate == row.toString() + column.toString()
                         )
                     )
                 }
-            }
-        }
+            })
+        })
         return surroundingCells
     }
 
