@@ -9,24 +9,9 @@ import {
 } from "react-native"
 import Colours from "../constants/colours"
 
-const getCellState = (cell, gameState) => {
-  if (cell.hasFlag) {
-    if (gameState == "GameOver" && !cell.hasMine) {
-      return "FlaggedIncorrectly"
-    }
-    return "Flagged"
-  } else if (!cell.uncovered) {
-    return "Covered"
-  } else if (cell.hasMine && !cell.hasFlag) {
-    return "Mine"
-  }
-  return "MinesInVicinity"
-}
+const configureCellDisplay = cell => {
 
-const configureCellDisplay = (cell, gameState) => {
-  const cellState = getCellState(cell, gameState)
-
-  switch (cellState) {
+  switch (cell.state) {
     case "Covered":
       return <Image style={styles.cell} source={require("../assets/grid-cell-button.png")} />
     case "Flagged":
@@ -54,7 +39,7 @@ const configureCellDisplay = (cell, gameState) => {
           source={require("../assets/mine.png")}
         />
       )
-    case "MinesInVicinity":
+    case "Uncovered":
       return (
         <View style={styles.uncoveredCell}>
           <Text style={{ ...styles.minesNumberText, color: getCellTextColour(cell) }}>{cell.minesInVicinity.toString()}</Text>

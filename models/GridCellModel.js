@@ -6,6 +6,7 @@ class GridCellModel {
         this.uncovered = false
         this.pressedForGameOver = false
         this.minesInVicinity = null
+        this.state = "Covered"
     }
 }
 

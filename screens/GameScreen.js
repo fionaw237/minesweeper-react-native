@@ -68,8 +68,11 @@ const GameScreen = props => {
 
     const uncoverMineContainingCells = () => {
         for (let index = 0; index < gridCells.length; index++) {
-            if (gridCells[index].hasMine || gridCells[index].hasFlag) {
+            if (gridCells[index].hasMine) {
                 gridCells[index].uncovered = true
+                gridCells[index].state = "Mine"
+            } else if (gridCells[index].hasFlag) {
+                gridCells[index].state = "FlaggedIncorrectly"
             }
         }
     }
@@ -145,6 +148,7 @@ const GameScreen = props => {
 
         cell.minesInVicinity = calculateMinesInVicinity(cell)
         cell.uncovered = true
+        cell.state = "Uncovered"
         setGridCells(current => [...current])
     }
 
@@ -153,9 +157,11 @@ const GameScreen = props => {
             if (cell.uncovered) return
             if (cell.hasFlag) {
                 cell.hasFlag = false
+                cell.state = "Covered"
                 setRemainingFlags(current => current + 1)
             } else if (!cell.hasFlag && remainingFlags > 0) {
                 cell.hasFlag = true
+                cell.state = "Flagged"
                 setRemainingFlags(current => current - 1)
             } else {
                 Alert.alert("No flags left!", "Remove an existing flag to place one elsewhere", [{ text: "Okay", style: "destructive" }])
@@ -176,7 +182,6 @@ const GameScreen = props => {
                 cell={cellData.item}
                 onPress={() => handleCellPress(cellData.item)}
                 onLongPress={() => handleLongPress(cellData.item)}
-                gameState={gameState}
             />
         )
     }
