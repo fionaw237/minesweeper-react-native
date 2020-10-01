@@ -10,7 +10,6 @@ import {
 import Colours from "../constants/colours"
 
 const configureCellDisplay = cell => {
-
   switch (cell.state) {
     case "Covered":
       return <Image style={styles.cell} source={require("../assets/grid-cell-button.png")} />

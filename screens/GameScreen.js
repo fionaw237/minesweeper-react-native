@@ -69,7 +69,6 @@ const GameScreen = props => {
     const uncoverMineContainingCells = () => {
         for (let index = 0; index < gridCells.length; index++) {
             if (gridCells[index].hasMine) {
-                gridCells[index].uncovered = true
                 gridCells[index].state = "Mine"
             } else if (gridCells[index].hasFlag) {
                 gridCells[index].state = "FlaggedIncorrectly"
@@ -132,7 +131,7 @@ const GameScreen = props => {
     }
 
     const handleCellPress = cell => {
-        if (gameState == "GameOver" || cell.uncovered) return
+        if (gameState == "GameOver" || cell.state == "Uncovered") return
 
         if (gameState == "ReadyToStart") {
             randomlydistributeMines(cell)
@@ -147,14 +146,13 @@ const GameScreen = props => {
         }
 
         cell.minesInVicinity = calculateMinesInVicinity(cell)
-        cell.uncovered = true
         cell.state = "Uncovered"
         setGridCells(current => [...current])
     }
 
     const handleLongPress = cell => {
         if (gameState == "TimerStarted") {
-            if (cell.uncovered) return
+            if (cell.state == "Uncovered") return
             if (cell.hasFlag) {
                 cell.hasFlag = false
                 cell.state = "Covered"
