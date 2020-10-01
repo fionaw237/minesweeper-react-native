@@ -9,10 +9,6 @@ import {
 } from "react-native"
 import Colours from "../constants/colours"
 
-/* <ImageBackground style={{width:100, height:100, jsutifyContent:'center}}>
-<Image/> //childimage
-</ImageBackground */
-
 const configureCellDisplay = cell => {
   if (cell.hasFlag) {
     return (
@@ -32,7 +28,7 @@ const configureCellDisplay = cell => {
         source={require("../assets/mine.png")}
       />
     )
-  }
+  } 
   return (
     <View style={styles.uncoveredCell}>
       <Text style={{ ...styles.minesNumberText, color: getCellTextColour(cell) }}>{cell.minesInVicinity.toString()}</Text>
