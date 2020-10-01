@@ -158,6 +158,15 @@ const GameScreen = props => {
         }
     }
 
+    const checkForGameWon = () => {
+        let clickedCellCount = gridCells.filter( cell => cell.hasFlag || cell.state == "Uncovered").length
+        return clickedCellCount == (numberOfRows * numberOfColumns) - remainingFlags
+    }
+
+    const handleGameWon = () => {
+        Alert.alert("You won!", "Your time was 00:00", [{ text: "Great!", style: "default" }])
+    }
+
     const handleCellPress = cell => {
         if (gameState == "GameOver" || cell.state == "Uncovered") return
 
@@ -181,6 +190,12 @@ const GameScreen = props => {
 
         cell.state = "Uncovered"
         setGridCells(current => [...current])
+
+        if (checkForGameWon()) {
+            setGameState("GameWon")
+            handleGameWon()
+        }
+
     }
 
     const handleLongPress = cell => {

@@ -58,7 +58,7 @@ const GridCell = props => {
       onPress={() => props.onPress()}
       onLongPress={() => props.onLongPress()}
     >
-      {configureCellDisplay(props.cell, props.gameState)}
+      {configureCellDisplay(props.cell)}
     </TouchableHighlight>
   )
 }
