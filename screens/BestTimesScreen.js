@@ -39,7 +39,7 @@ const bestTimesDeletionHandler = () => {
 
 BestTimesScreen.navigationOptions = () => {
     return {
-        headerRight: <HeaderButtons HeaderButtonComponent={DeleteBestTimesButton}>
+        headerRight: () =>  <HeaderButtons HeaderButtonComponent={DeleteBestTimesButton}>
             <Item
                 title="Delete All Best Times"
                 iconName="md-trash"
