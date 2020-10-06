@@ -5,7 +5,9 @@ import {
     ScrollView,
     StyleSheet
 } from "react-native"
+import { HeaderButtons, Item } from "react-navigation-header-buttons"
 
+import DeleteBestTimesButton from "../components/DeleteBestTimesButton"
 import Colours from "../constants/colours"
 import { BEST_TIMES } from "../data/dummy_data"
 
@@ -23,12 +25,29 @@ const bestTimesList = () => {
     return BEST_TIMES.map((time, index) => bestTimesListItem(time, index + 1))
 }
 
-const BestTimes = props => {
+const BestTimesScreen = props => {
     return (
         <ScrollView contentContainerStyle={styles.screen}>
             {bestTimesList()}
         </ScrollView>
     )
+}
+
+const bestTimesDeletionHandler = () => {
+    console.log("Delete button pressed!")
+}
+
+BestTimesScreen.navigationOptions = () => {
+    return {
+        headerRight: <HeaderButtons HeaderButtonComponent={DeleteBestTimesButton}>
+            <Item
+                title="Delete All Best Times"
+                iconName="md-trash"
+                onPress={() => bestTimesDeletionHandler}
+            />
+        </HeaderButtons>
+
+    }
 }
 
 const styles = StyleSheet.create({
@@ -56,4 +75,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default BestTimes
+export default BestTimesScreen
