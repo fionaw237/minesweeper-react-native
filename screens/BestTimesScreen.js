@@ -1,28 +1,58 @@
 import React from "react"
-import { 
-    View, 
-    Text, 
-    StyleSheet 
+import {
+    View,
+    Text,
+    ScrollView,
+    StyleSheet
 } from "react-native"
 
 import Colours from "../constants/colours"
+import { BEST_TIMES } from "../data/dummy_data"
+
+const bestTimesListItem = (item, position) => {
+    return (
+        <View key={position} style={styles.listItemContainer}>
+            <Text style={styles.bestTimesText}>{position})</Text>
+            <Text style={styles.bestTimesText}>{item.name}</Text>
+            <Text style={styles.bestTimesText}>{item.time}</Text>
+        </View>
+    )
+}
+
+const bestTimesList = () => {
+    return BEST_TIMES.map((time, index) => bestTimesListItem(time, index + 1))
+}
 
 const BestTimes = props => {
     return (
-        <View style={styles.screen}>
-            <Text>
-                Best times screen!
-            </Text>
-        </View>
+        <ScrollView contentContainerStyle={styles.screen}>
+            {bestTimesList()}
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
         backgroundColor: Colours.mainBackground
+    },
+    listItemContainer: {
+        paddingHorizontal: 10,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: "80%",
+        height: 50,
+        borderBottomWidth: 1,
+        borderBottomColor: Colours.secondaryBackground,
+        marginVertical: 8
+    },
+    bestTimesText: {
+        fontSize: 18,
+        fontFamily: "alegreya-sans",
+        color: Colours.primary
     }
 })
 
