@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
     View,
     StyleSheet,
@@ -31,6 +31,19 @@ const GameScreen = props => {
 
     const [gameState, setGameState] = useState("ReadyToStart")
     const [remainingFlags, setRemainingFlags] = useState(() => numberOfMines())
+
+    const [gameTime, setGameTime] = useState(0)
+    const [timerStarted, setTimerStarted] = useState(false)
+
+    useEffect(() => {
+        let interval = null
+        if (gameState === "TimerStarted") {
+            interval = setInterval(() => {
+                setGameTime(time => time + 1)
+            }, 1000)
+        }
+        return () => clearInterval(interval)
+    }, [timerStarted, gameTime])
 
     const initialiseGridCells = () => {
         const result = []
@@ -128,6 +141,7 @@ const GameScreen = props => {
         setGameState("GameOver")
         uncoverMineContainingCells()
         setGridCells(current => [...current])
+        setTimerStarted(false)
     }
 
     const handleZeroMinesInVicinityOfCell = cell => {
@@ -180,7 +194,7 @@ const GameScreen = props => {
 
         if (gameState == "ReadyToStart") {
             randomlydistributeMines(cell)
-            // start timer
+            setTimerStarted(true)
             setGameState("TimerStarted")
         }
 
@@ -227,6 +241,8 @@ const GameScreen = props => {
     const handleResetButtonPressed = () => {
         setGridCells(initialiseGridCells())
         setGameState("ReadyToStart")
+        setTimerStarted(false)
+        setGameTime(0)
         setRemainingFlags(numberOfMines())
     }
 
@@ -248,7 +264,7 @@ const GameScreen = props => {
                 </View>
                 <ResetGameButton onPress={handleResetButtonPressed} gameState={gameState} />
                 <View style={styles.counterContainer}>
-                    <Text style={styles.counterText}>00:00</Text>
+                    <Text style={styles.counterText}>{gameTime}</Text>
                 </View>
             </View>
             <View style={styles.flatlistContainer}>
