@@ -10,6 +10,7 @@ import GridCell from "../components/GridCell"
 import GridCellModel from "../models/GridCellModel"
 import ResetGameButton from "../components/ResetGameButton"
 import Colours from "../constants/colours"
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry"
 
 const GameScreen = props => {
 
@@ -33,6 +34,14 @@ const GameScreen = props => {
     const [remainingFlags, setRemainingFlags] = useState(() => numberOfMines())
 
     const [gameTime, setGameTime] = useState(0)
+
+    const getFormattedTime = () => {
+        const minutes = Math.floor(gameTime / 60)
+        const seconds = gameTime % 60
+        const minutesString = minutes < 10 ? "0" + minutes.toString() : minutes.toString()
+        const secondsString = seconds < 10 ? "0" + seconds.toString() : seconds.toString()
+        return minutesString + ":" + secondsString
+    }
 
     useEffect(() => {
         let interval = null
@@ -260,7 +269,7 @@ const GameScreen = props => {
                 </View>
                 <ResetGameButton onPress={handleResetButtonPressed} gameState={gameState} />
                 <View style={styles.counterContainer}>
-                    <Text style={styles.counterText}>{gameTime}</Text>
+                    <Text style={styles.counterText}>{getFormattedTime()}</Text>
                 </View>
             </View>
             <View style={styles.flatlistContainer}>
