@@ -33,7 +33,6 @@ const GameScreen = props => {
     const [remainingFlags, setRemainingFlags] = useState(() => numberOfMines())
 
     const [gameTime, setGameTime] = useState(0)
-    const [timerStarted, setTimerStarted] = useState(false)
 
     useEffect(() => {
         let interval = null
@@ -43,7 +42,7 @@ const GameScreen = props => {
             }, 1000)
         }
         return () => clearInterval(interval)
-    }, [timerStarted, gameTime])
+    }, [gameState, gameTime])
 
     const initialiseGridCells = () => {
         const result = []
@@ -141,7 +140,6 @@ const GameScreen = props => {
         setGameState("GameOver")
         uncoverMineContainingCells()
         setGridCells(current => [...current])
-        setTimerStarted(false)
     }
 
     const handleZeroMinesInVicinityOfCell = cell => {
@@ -194,7 +192,6 @@ const GameScreen = props => {
 
         if (gameState == "ReadyToStart") {
             randomlydistributeMines(cell)
-            setTimerStarted(true)
             setGameState("TimerStarted")
         }
 
@@ -241,7 +238,6 @@ const GameScreen = props => {
     const handleResetButtonPressed = () => {
         setGridCells(initialiseGridCells())
         setGameState("ReadyToStart")
-        setTimerStarted(false)
         setGameTime(0)
         setRemainingFlags(numberOfMines())
     }
