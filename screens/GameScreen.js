@@ -10,7 +10,6 @@ import GridCell from "../components/GridCell"
 import GridCellModel from "../models/GridCellModel"
 import ResetGameButton from "../components/ResetGameButton"
 import Colours from "../constants/colours"
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry"
 
 const GameScreen = props => {
 
